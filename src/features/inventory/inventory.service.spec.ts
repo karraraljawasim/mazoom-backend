@@ -13,7 +13,7 @@ import { CreateInventoryDto } from './dto/create-inventory.dto';
 describe('InventoryService', () => {
   let inventoryService: InventoryService;
   let inventoryRepository: InventoryRepository;
-  let inventoryRdisService: InventoryRedisService;
+  let inventoryRedisService: InventoryRedisService;
   let eventService: EventService;
 
   beforeEach(async () => {
@@ -29,6 +29,7 @@ describe('InventoryService', () => {
             findById: jest.fn(),
             getItemsByEventId: jest.fn(),
             getActiveStockCounts: jest.fn(),
+            getActiveStockCountById: jest.fn(),
           },
         },
         {
@@ -37,6 +38,7 @@ describe('InventoryService', () => {
             release: jest.fn(),
             reserve: jest.fn(),
             syncInventoryToRedis: jest.fn(),
+            deleteKey: jest.fn(),
           },
         },
         {
@@ -50,7 +52,7 @@ describe('InventoryService', () => {
 
     inventoryService = module.get<InventoryService>(InventoryService);
     inventoryRepository = module.get<InventoryRepository>(InventoryRepository);
-    inventoryRdisService = module.get<InventoryRedisService>(
+    inventoryRedisService = module.get<InventoryRedisService>(
       InventoryRedisService,
     );
     eventService = module.get<EventService>(EventService);
@@ -127,6 +129,14 @@ describe('InventoryService', () => {
         id: 'inventory 1',
         name: 'new name',
       } as InventoryRows);
+
+      jest
+        .spyOn(inventoryRepository, 'getActiveStockCountById')
+        .mockResolvedValue({
+          id: 'inventoryItems Id ',
+          totalQuantity: 3,
+          reservedQuantity: 2,
+        });
 
       const result = await inventoryService.updateById('inventory 1', {
         name: 'new name',

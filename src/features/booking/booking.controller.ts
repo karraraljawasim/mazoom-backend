@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   Param,
+  ParseUUIDPipe,
   Patch,
   Post,
   UseGuards,
@@ -105,7 +106,7 @@ export class BookingController {
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   async getById(
-    @Param('bookingId') bookingId: string,
+    @Param('bookingId', ParseUUIDPipe) bookingId: string,
     @GetUser() user: PublicUser,
   ) {
     return await this.bookingService.getById(bookingId, user.id, user.role);
@@ -141,7 +142,7 @@ export class BookingController {
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   async cancelBooking(
-    @Param('bookingId') bookingId: string,
+    @Param('bookingId', ParseUUIDPipe) bookingId: string,
     @GetUser() user: PublicUser,
   ) {
     return await this.bookingService.cancelBooking(

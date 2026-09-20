@@ -68,6 +68,8 @@ export class InventoryService implements OnModuleInit {
     }
 
     await this.inventoryRepository.deleteById(inventoryId);
+    await this.inventoryRedisService.deleteKey(inventoryId);
+
     return;
   }
 
@@ -77,8 +79,14 @@ export class InventoryService implements OnModuleInit {
       throw new NotFoundException('Inventory not found');
     }
 
-    return await this.inventoryRepository.updateById(inventoryId, {
+    const updated = await this.inventoryRepository.updateById(inventoryId, {
       ...data,
     });
+    const stock =
+      await this.inventoryRepository.getActiveStockCountById(inventoryId);
+
+    if (stock) await this.inventoryRedisService.syncInventoryToRedis([stock]);
+
+    return updated;
   }
 }

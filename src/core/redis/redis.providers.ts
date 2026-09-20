@@ -13,8 +13,8 @@ export const redisProviders: Provider[] = [
     inject: [ConfigService],
     useFactory: (configService: ConfigService) => {
       const scriptPath = path.join(
-        process.cwd(),
-        'src/features/inventory/lua/reserve.lua',
+        __dirname,
+        '../../features/inventory/lua/reserve.lua',
       );
       const reserveScript = fs.readFileSync(scriptPath, 'utf8');
       try {

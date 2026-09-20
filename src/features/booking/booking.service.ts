@@ -11,6 +11,7 @@ import { InventoryRedisService } from '../inventory/inventory-redis.service';
 import { InjectQueue } from '@nestjs/bullmq';
 import { Queue } from 'bullmq';
 import { BookingRows } from './schema/booking.schema';
+import { BookingStatus } from './enums/booking-status.enum';
 
 const HOLD_DURATION_MS = 60 * 1000;
 
@@ -96,6 +97,23 @@ export class BookingService {
       throw new ForbiddenException();
     }
 
-    return await this.bookingRepository.cancelBooking(bookingId);
+    if (
+      booking.status !== BookingStatus.Pending &&
+      booking.status !== BookingStatus.Confirmed
+    ) {
+      throw new ConflictException(
+        `Booking cannot be cancelled in its current state`,
+      );
+    }
+
+    const cancelledBooking =
+      await this.bookingRepository.cancelBooking(bookingId);
+
+    await this.inventoryRedisService.release(
+      booking.inventoryItemId,
+      booking.quantity,
+    );
+
+    return cancelledBooking;
   }
 }

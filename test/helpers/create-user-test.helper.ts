@@ -3,6 +3,7 @@ import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
 import { Role } from '../../src/features/user/enums/user-role.enum';
 import { users } from '../../src/features/user/schema/user.schema';
+import { eq } from 'drizzle-orm';
 
 let counter = 0;
 
@@ -21,7 +22,7 @@ export async function createUserTest(
     .send({ fullName: 'Test User', email, password });
 
   if (role === Role.Admin) {
-    await db.update(users).set({ role: role });
+    await db.update(users).set({ role: role }).where(eq(users.email, email));
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-argument

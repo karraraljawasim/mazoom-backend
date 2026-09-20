@@ -27,7 +27,7 @@ import {
   description: 'Internal Server Error',
 })
 @ApiResponse({
-  status: 401,
+  status: 404,
   description: 'Not Found: Inventory with this id is not found.',
 })
 @Controller('inventory')
@@ -132,7 +132,7 @@ export class InventoryController {
     description: 'Bad Request: Invalid uuid format.',
   })
   @ApiResponse({
-    status: 401,
+    status: 404,
     description: 'Not Found: Event with this id is not found.',
   })
   async getById(@Param('inventoryId', ParseUUIDPipe) inventoryId: string) {

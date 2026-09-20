@@ -34,7 +34,7 @@ describe('EventController (e2e)', () => {
         .send({
           name: 'Test Event',
           description: 'This is a test event',
-          saleStartsAt: '2026-08-08',
+          saleStartsAt: '2028-08-08',
         })
         .expect(HttpStatus.CREATED);
 
@@ -52,7 +52,7 @@ describe('EventController (e2e)', () => {
         .send({
           name: 'Test Event',
           description: 'This is a test event',
-          saleStartsAt: '2026-08-08',
+          saleStartsAt: '2028-08-08',
         })
         .expect(HttpStatus.FORBIDDEN);
     });
@@ -79,7 +79,7 @@ describe('EventController (e2e)', () => {
       const response = await request(app.getHttpServer())
         .post('/events')
         .set('Authorization', `Bearer ${adminUser.token}`)
-        .send({ name: 'Test Event', saleStartsAt: '2026-08-01' })
+        .send({ name: 'Test Event', saleStartsAt: '2028-08-01' })
         .expect(201);
 
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access

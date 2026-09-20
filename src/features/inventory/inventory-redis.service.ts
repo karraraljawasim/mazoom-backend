@@ -51,4 +51,8 @@ export class InventoryRedisService {
 
     await pipeline.exec();
   }
+
+  async deleteKey(inventoryItemId: string) {
+    await this.redisClient.del(REDIS_KEYS.inventory.available(inventoryItemId));
+  }
 }

@@ -23,7 +23,7 @@ export class UserController {
   @ApiOperation({ summary: 'Get user login user info (profile).' })
   @ApiResponse({
     status: 200,
-    description: 'Create event successfully.',
+    description: 'Get current user profile.',
     schema: {
       example: {
         success: true,

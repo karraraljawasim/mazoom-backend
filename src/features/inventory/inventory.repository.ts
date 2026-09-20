@@ -115,4 +115,29 @@ export class InventoryRepository {
       )
       .groupBy(inventoryItems.id, inventoryItems.totalQuantity);
   }
+
+  async getActiveStockCountById(inventoryId: string) {
+    const [result] = await this.db
+      .select({
+        id: inventoryItems.id,
+        totalQuantity: inventoryItems.totalQuantity,
+        reservedQuantity:
+          sql<number>`COALESCE(SUM(${bookings.quantity}), 0)`.mapWith(Number),
+      })
+      .from(inventoryItems)
+      .leftJoin(
+        bookings,
+        and(
+          eq(inventoryItems.id, bookings.inventoryItemId),
+          inArray(bookings.status, [
+            BookingStatus.Pending,
+            BookingStatus.Confirmed,
+          ]),
+        ),
+      )
+      .where(eq(inventoryItems.id, inventoryId))
+      .groupBy(inventoryItems.id, inventoryItems.totalQuantity);
+
+    return result;
+  }
 }

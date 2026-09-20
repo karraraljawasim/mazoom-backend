@@ -16,7 +16,7 @@ export class EventService {
     });
   }
 
-  async getAll(skip = 10, limit = 10) {
+  async getAll(skip = 0, limit = 10) {
     return await this.eventRepository.getAll(skip, limit);
   }
 
