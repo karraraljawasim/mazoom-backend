@@ -1,6 +1,6 @@
-# Rashly
- 
-Rashly is a backend ticketing API that manages users, events, and bookings. It uses Redis to prevent double-booking during high-demand sales, guaranteeing only one person can claim a contested ticket. It also uses temporary checkout holds, automatically releasing unsold seats back into the pool if a purchase isn't finalized.
+# Mazoom
+
+Mazoom is a backend ticketing API that manages users, events, and bookings. It uses Redis to prevent double-booking during high-demand sales, guaranteeing only one person can claim a contested ticket. It also uses temporary checkout holds, automatically releasing unsold seats back into the pool if a purchase isn't finalized.
 
 ## Tech stack
 
@@ -19,8 +19,8 @@ Rashly is a backend ticketing API that manages users, events, and bookings. It u
 ### 1. Clone the repo
 
 ```bash
-git clone https://github.com/karraraljawasim/rashly-backend.git
-cd rashly-backend
+git clone https://github.com/karraraljawasim/mazoom-backend.git
+cd mazoom-backend
 ```
 
 ### 2. Install dependencies

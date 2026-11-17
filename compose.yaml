@@ -1,12 +1,12 @@
 services:
   postgres:
     image: postgres:18
-    container_name: rashly_postgres
+    container_name: mazoom_postgres
     restart: unless-stopped
     environment:
-      POSTGRES_USER: rashly_user
-      POSTGRES_PASSWORD: rashly_password
-      POSTGRES_DB: rashly_db
+      POSTGRES_USER: mazoom_user
+      POSTGRES_PASSWORD: mazoom_password
+      POSTGRES_DB: mazoom_db
     ports:
       - "5433:5432"
     volumes:
@@ -14,7 +14,7 @@ services:
 
   redis:
     image: redis:7
-    container_name: rashly_redis
+    container_name: mazoom_redis
     restart: unless-stopped
     ports:
       - "6379:6379"

@@ -13,8 +13,8 @@ async function bootstrap() {
     }),
   );
   const options = new DocumentBuilder()
-    .setTitle('Rashly')
-    .setDescription('The rashly API Documentation')
+    .setTitle('Mazoom')
+    .setDescription('The mazoom API Documentation')
     .setVersion('1.0')
     .addBearerAuth()
     .build();
